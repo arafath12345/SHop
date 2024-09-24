@@ -77,13 +77,25 @@ app.get('/banner/:code', async (req, res) => {
 app.get('/carder', async ( req, res) => {
     try {
         const result = await carderSection.find().toArray();
-        console.log(result)
+        // console.log(result)
         res.send(result);
     } catch (err) {
-        res.status(500).send("Error fetching banners");
+        res.status(500).send("Error fetching carder");
     }
 })
 
+
+app.get('/carder/:code', async (req, res) => {
+    try {
+        const cursor = req.params.code;
+        const num = parseFloat(cursor);
+        const result = await carderSection.findOne({ code: num });
+        console.log(result)
+        res.send(result);
+    } catch (err) {
+        res.status(500).send("Error fetching banner by code");
+    }
+});
 
 
 
