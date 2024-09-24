@@ -11,7 +11,7 @@ const cors = require('cors');
 
 // Apply CORS middleware
 app.use(cors({
-    origin: ['http://localhost:5173','https://arafath-engenering-workshop.vercel.app'],
+    origin: ['http://localhost:5173','https://arafath-engenering-workshop.vercel.app','http://localhost:5000'],
 }));
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -27,6 +27,7 @@ const client = new MongoClient(uri, {
 });
 
 let bannerCollection;
+let carderSection;
 
 async function connectToDatabase() {
     try {
@@ -34,6 +35,12 @@ async function connectToDatabase() {
         await client.connect();
         // Get the collection reference
         bannerCollection = client.db('Dukan').collection('banner_section');
+
+        carderSection = client.db('Dukan').collection('carder');
+
+
+
+
         console.log("Successfully connected to MongoDB!");
     } catch (err) {
         console.error("Error connecting to MongoDB", err);
@@ -65,6 +72,21 @@ app.get('/banner/:code', async (req, res) => {
         res.status(500).send("Error fetching banner by code");
     }
 });
+
+
+app.get('/carder', async ( req, res) => {
+    try {
+        const result = await carderSection.find().toArray();
+        console.log(result)
+        res.send(result);
+    } catch (err) {
+        res.status(500).send("Error fetching banners");
+    }
+})
+
+
+
+
 
 // Ensure database connection before starting the server
 connectToDatabase().then(() => {
