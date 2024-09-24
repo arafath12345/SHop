@@ -88,14 +88,15 @@ app.get('/carder', async ( req, res) => {
 
 
 app.get('/carder/:code', async (req, res) => {
+
     
     try {
-        
+        const cursor = req.params.code;
         const result = await carderSection.findOne({ code: cursor });
         // console.log(result)
         res.send(result);
     } catch (err) {
-        res.status(500).send("Error fetching banner by code");
+        res.status(500).send("Error fetching carder by code");
     }
 });
 
