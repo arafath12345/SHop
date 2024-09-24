@@ -63,9 +63,11 @@ app.get('/banner', async (req, res) => {
 
 // Route to get a banner by code
 app.get('/banner/:code', async (req, res) => {
+    
     try {
         const cursor = req.params.code;
         const num = parseFloat(cursor);
+        // console.log(num,"hedam")
         const result = await bannerCollection.findOne({ code: num });
         res.send(result);
     } catch (err) {
@@ -86,11 +88,11 @@ app.get('/carder', async ( req, res) => {
 
 
 app.get('/carder/:code', async (req, res) => {
+    
     try {
-        const cursor = req.params.code;
-        const num = parseFloat(cursor);
-        const result = await carderSection.findOne({ code: num });
-        console.log(result)
+        
+        const result = await carderSection.findOne({ code: cursor });
+        // console.log(result)
         res.send(result);
     } catch (err) {
         res.status(500).send("Error fetching banner by code");
